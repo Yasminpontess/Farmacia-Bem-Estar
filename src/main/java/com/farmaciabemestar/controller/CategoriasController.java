@@ -43,17 +43,15 @@ public class CategoriasController {
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	@GetMapping("/marca/{marca}") // Buscar por marca
-	public ResponseEntity<Categorias> getByMarca(@PathVariable String marca) {
-	    return categoriasRepository.findByMarca(marca)
-	            .map(resposta -> ResponseEntity.ok(resposta))
-	            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	public ResponseEntity<Optional<Categorias>> getByMarca(@PathVariable String marca) {
+		return ResponseEntity.ok(categoriasRepository
+    			.findAllByMarcaContainingIgnoreCase(marca));
 	}
 
 	@GetMapping("/solucao/{solucao}") // Buscar por solução
-	public ResponseEntity<Categorias> getBySolucao(@PathVariable String solucao) {
-	    return categoriasRepository.findBySolucao(solucao)
-	            .map(resposta -> ResponseEntity.ok(resposta))
-	            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	public ResponseEntity<Optional<Categorias>> getBySolucao(@PathVariable String solucao) {
+		return ResponseEntity.ok(categoriasRepository
+    			.findAllBySolucaoContainingIgnoreCase(solucao));
 	}
 	
 	
